@@ -1,6 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
+import Navbar from "@/components/navbar";
 import { Hero } from "@/components/hero/hero";
 import Footer from "@/components/footer";
 import Events from "@/components/events";
