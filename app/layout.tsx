@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { Baloo_2 } from "next/font/google";
+
 import "./globals.css";
 
 const poppins = Poppins({
@@ -8,9 +10,19 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+const baloo_2 = Baloo_2({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-baloo_2",
+});
+
+
 export const metadata: Metadata = {
-  title: "Summer Mela | EOD Adventure Park",
-  description: "Join us for Summer Mela at EOD Adventure Park. Enjoy balloon showdowns, live music, DJ, food stalls, and much more with free entry from June 15-30.",
+  title: "EOD Adventure Park",
+  description: "Summer Mela free entry from June 15-30",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -20,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${poppins.variable} font-sans antialiased`}>
+      <body className={`${poppins.variable} ${baloo_2.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

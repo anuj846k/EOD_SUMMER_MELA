@@ -1,16 +1,16 @@
 "use client";
 
-import Navbar from "@/components/navbar";
-import { Hero } from "@/components/hero/hero";
-import Footer from "@/components/footer";
-import Events from "@/components/events";
-import Activities from "@/components/events/activities";
-import TicketCTA from "@/components/ticket-cta";
-import FaqSection from "@/components/faq";
+import Navbar from "@/app/components/navbar";
+import { Hero } from "@/app/components/hero/hero";
+import Footer from "@/app/components/footer";
+import Events from "@/app/components/events";
+import Activities from "@/app/components/events/activities";
+import TicketCTA from "@/app/components/ticket-cta";
+import FaqSection from "@/app/components/faq";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col  ">
       <Navbar />
 
       <main>
