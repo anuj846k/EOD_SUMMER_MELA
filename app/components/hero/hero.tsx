@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/app/components/ui/button";
-import sun from "@/app/assets/images/sun.png" ;
+import sun from "@/app/assets/Images/sun.png" ;
 
 export function Hero() {
   return (

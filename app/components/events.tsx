@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import scooter from "@/app/assets/images/scooter.png";
+import scooter from "@/app/assets/Images/scooter.png";
 
 // Sample previous events data - replace with your actual events
 const previousEvents = [
