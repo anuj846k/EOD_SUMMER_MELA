@@ -1,0 +1,28 @@
+<svg width="800" height="100" viewBox="0 0 800 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 10H800" stroke="white" stroke-width="2"/>
+  
+  <!-- Blue flags -->
+  <path d="M20 10L40 50L60 10" fill="#1D4ED8"/>
+  <path d="M140 10L160 50L180 10" fill="#1D4ED8"/>
+  <path d="M260 10L280 50L300 10" fill="#1D4ED8"/>
+  <path d="M380 10L400 50L420 10" fill="#1D4ED8"/>
+  <path d="M500 10L520 50L540 10" fill="#1D4ED8"/>
+  <path d="M620 10L640 50L660 10" fill="#1D4ED8"/>
+  <path d="M740 10L760 50L780 10" fill="#1D4ED8"/>
+  
+  <!-- Pink flags -->
+  <path d="M60 10L80 50L100 10" fill="#F472B6"/>
+  <path d="M180 10L200 50L220 10" fill="#F472B6"/>
+  <path d="M300 10L320 50L340 10" fill="#F472B6"/>
+  <path d="M420 10L440 50L460 10" fill="#F472B6"/>
+  <path d="M540 10L560 50L580 10" fill="#F472B6"/>
+  <path d="M660 10L680 50L700 10" fill="#F472B6"/>
+  
+  <!-- White flags -->
+  <path d="M100 10L120 50L140 10" fill="white"/>
+  <path d="M220 10L240 50L260 10" fill="white"/>
+  <path d="M340 10L360 50L380 10" fill="white"/>
+  <path d="M460 10L480 50L500 10" fill="white"/>
+  <path d="M580 10L600 50L620 10" fill="white"/>
+  <path d="M700 10L720 50L740 10" fill="white"/>
+</svg> 
