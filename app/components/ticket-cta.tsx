@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "./ui/button";
 import bgPattern from "@/app/assets/Images/image2.png";
+import Link from "next/link";
 
 const TicketCTA = () => {
   return (
@@ -36,9 +37,12 @@ const TicketCTA = () => {
           Limited tickets available!
         </p>
 
-        <Button className="text-xl bg-gradient-to-r from-blue-500 to-blue-600 cursor-pointer text-white font-bold py-4 px-10 rounded-full shadow-lg transition-transform transform hover:scale-105">
+        <Link
+          href="/booking"
+          className="text-xl bg-gradient-to-r from-blue-500 to-blue-600 cursor-pointer text-white font-bold py-4 px-10 rounded-full shadow-lg transition-transform transform hover:scale-105"
+        >
           Book Now
-        </Button>
+        </Link>
       </div>
     </section>
   );

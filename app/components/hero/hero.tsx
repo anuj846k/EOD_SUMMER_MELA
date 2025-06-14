@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/app/components/ui/button";
 import sun from "@/app/assets/Images/sun.png";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -56,9 +57,12 @@ export function Hero() {
         </h1>
 
         <div className="inline-block mb-10">
-          <h3 className="cursor-pointer bg-red-500 px-6 py-2 rounded-full border-2 border-white shadow-md text-white text-xl font-bold tracking-wide">
-             Book Now
-          </h3>
+          <Link
+            href="/booking"
+            className="cursor-pointer bg-red-500 px-6 py-2 rounded-full border-2 border-white shadow-md text-white text-xl font-bold tracking-wide"
+          >
+            Book Now
+          </Link>
         </div>
 
         <div className="bg-white/70 backdrop-blur-lg p-6 rounded-2xl border-4 border-dashed border-yellow-400 max-w-3xl mx-auto shadow-lg mb-10">
