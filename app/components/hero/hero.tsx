@@ -56,8 +56,8 @@ export function Hero() {
         </h1>
 
         <div className="inline-block mb-10">
-          <h3 className="bg-red-500 px-6 py-2 rounded-full border-2 border-white shadow-md text-white text-xl font-bold tracking-wide">
-            INCLUSIONS
+          <h3 className="cursor-pointer bg-red-500 px-6 py-2 rounded-full border-2 border-white shadow-md text-white text-xl font-bold tracking-wide">
+             Book Now
           </h3>
         </div>
 
@@ -87,7 +87,7 @@ export function Hero() {
         </div>
 
         <div className="flex justify-center">
-          <Button className="bg-gradient-to-r from-yellow-400 via-pink-500 to-red-500 hover:from-yellow-500 hover:to-red-600 text-white font-bold py-3 sm:py-4 px-8 sm:px-10 rounded-full text-base sm:text-lg shadow-2xl transform transition-all duration-300 hover:scale-105 group">
+          {/* <Button className="bg-gradient-to-r from-yellow-400 via-pink-500 to-red-500 hover:from-yellow-500 hover:to-red-600 text-white font-bold py-3 sm:py-4 px-8 sm:px-10 rounded-full text-base sm:text-lg shadow-2xl transform transition-all duration-300 hover:scale-105 group">
             Book Now
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +103,7 @@ export function Hero() {
                 d="M14 5l7 7m0 0l-7 7m7-7H3"
               />
             </svg>
-          </Button>
+          </Button> */}
         </div>
       </div>
 

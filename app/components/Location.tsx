@@ -6,7 +6,7 @@ const Location = () => {
   return (
     <section
       id="location"
-      className="w-full px-4 md:px-20 lg:px-32 py-16 bg-gray-50 pb-24"
+      className="w-full px-4 md:px-20 lg:px-32 py-16  pb-24"
     >
       <h1 className="text-3xl md:text-5xl font-bold text-center mb-4 md:mb-8">
         Location & Access
@@ -56,7 +56,7 @@ const Location = () => {
             href="https://www.google.com/maps/dir//Gate+no-2,+Sanjay+Lake,+Pocket+D,+Mayur+Vihar,+New+Delhi,+Delhi,+110091"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-700 text-white text-sm md:text-base font-medium px-6 py-3 rounded-full transition"
+            className="inline-flex items-center gap-2 border-4 border-gray-300 bg-blue-500 hover:bg-blue-700 text-white text-sm md:text-base font-medium px-6 py-3 rounded-full transition"
           >
             <FaMapMarkedAlt /> Get Directions
           </a>

@@ -142,8 +142,8 @@ const Events = () => {
           {/* Right side - With scooter image and Summer Mela title */}
           <div className="w-full md:w-1/2 flex items-center justify-center mt-8 md:mt-0">
             <div className="relative overflow-hidden w-full">
-              <div className="relative z-10  p-12 rounded-xl transform transition-all duration-500   flex flex-col items-center justify-center">
-                <div className="relative w-full h-48 mb-6">
+              <div className="relative z-10  p-12 rounded-xl transform transition-all duration-500  hidden md:block  flex-col items-center justify-center">
+                <div className="relative w-full h-48 mb-6 ">
                   <Image
                     src={scooter}
                     alt="Food Delivery Scooter"
@@ -152,13 +152,11 @@ const Events = () => {
                   />
                 </div>
 
-                <h3 className="text-4xl font-extrabold text-blue-800 text-center">
-                  Summer Mela 2025
+                <h3 className=" text-4xl font-extrabold text-blue-800 text-center">
+                  Summer Mela 2025 🎉
                 </h3>
 
-                {/* <div className="w-32 h-1 bg-blue-200 rounded-full my-6"></div> */}
-
-                <div className="bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-bold shadow-md mt-4 flex items-center">
+                <div className="bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-bold shadow-md mt-4 flex items-center justify-center mx-auto">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 mr-2"

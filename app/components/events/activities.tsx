@@ -36,7 +36,7 @@ const Activities = () => {
   return (
     <section
       id="activities"
-      className="relative w-full px-4 md:px-20 lg:px-52 py-20 overflow-hidden bg-gradient-to-b from-sky-50 via-gray-50"
+      className="relative w-full px-4 md:px-20 lg:px-52 py-20 overflow-hidden bg-gradient-to-b bg-gray-50"
     >
       <div className="text-center mb-14">
         <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800">
