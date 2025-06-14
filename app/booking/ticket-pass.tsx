@@ -17,19 +17,25 @@ interface TicketPassProps {
     name: string;
     email: string;
     phone: string;
-    school: string;
-    rollNo: string;
-    price: number;
-    visitDate: Date;
+    visitDate: Date | string;
     ticketId: string;
-  };
-  formData?: {
     qrCodeData?: string;
+    bookingType?: string;
+    adultsCount?: number;
+    kidsCount?: number;
+    exitTime?: string;
   };
   onClose?: () => void;
+  setFormData?: (data: any) => void;
+  form?: any;
 }
 
-const TicketPass = ({ ticketData, onClose, formData }: TicketPassProps) => {
+const TicketPass = ({
+  ticketData,
+  onClose,
+  setFormData,
+  form,
+}: TicketPassProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isFlipping, setIsFlipping] = useState(true);
 
@@ -42,7 +48,7 @@ const TicketPass = ({ ticketData, onClose, formData }: TicketPassProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: Date | string) => {
     return new Intl.DateTimeFormat("en-US", {
       weekday: "short",
       year: "numeric",
@@ -51,47 +57,8 @@ const TicketPass = ({ ticketData, onClose, formData }: TicketPassProps) => {
     }).format(new Date(date));
   };
 
-  // Generate QR code data from ticket information
-  const qrCodeDataString = JSON.stringify({
-    ticketId: ticketData.ticketId,
-    name: ticketData.name,
-    visitDate: ticketData.visitDate,
-    validationKey: `${ticketData.ticketId}-${ticketData.phone.slice(-4)}`,
-  });
-
-  const qrCodeData = formData?.qrCodeData || qrCodeDataString;
-
-  const getComboColor = (combo: string) => {
-    switch (combo) {
-      case "explorer":
-      case "supreme":
-        return "bg-orange-500";
-      case "killer":
-      case "conqueror":
-        return "bg-purple-500";
-      case "kids":
-        return "bg-green-500";
-      default:
-        return "bg-blue-500";
-    }
-  };
-
-  const getComboIcon = (combo: string) => {
-    switch (combo) {
-      case "explorer":
-        return "🧭";
-      case "supreme":
-        return "👑";
-      case "killer":
-        return "🔥";
-      case "conqueror":
-        return "🏆";
-      case "kids":
-        return "🎪";
-      default:
-        return "🎢";
-    }
-  };
+  // Generate QR code data from ticket information if not provided
+  const qrCodeData = ticketData.qrCodeData || "";
 
   const handleClose = () => {
     setIsFlipping(true);
@@ -122,7 +89,7 @@ const TicketPass = ({ ticketData, onClose, formData }: TicketPassProps) => {
           <div className="bg-blue-500 text-white px-4 py-3 sm:p-4 flex justify-between items-center">
             <div className="flex items-center">
               <Ticket className="mr-2" size={20} />
-              <h2 className="text-lg sm:text-xl font-bold">Eod Park Pass</h2>
+              <h2 className="text-lg sm:text-xl font-bold">Summer Mela Pass</h2>
             </div>
             <button
               onClick={handleClose}
@@ -141,17 +108,41 @@ const TicketPass = ({ ticketData, onClose, formData }: TicketPassProps) => {
                 <h3 className="font-bold text-gray-800 text-sm sm:text-base">
                   {ticketData.name}
                 </h3>
-                <p className="text-xs text-gray-500">{ticketData.school}</p>
+                <p className="text-xs text-gray-500">
+                  {ticketData.bookingType === "individual"
+                    ? "Individual Pass"
+                    : ticketData.bookingType === "school"
+                    ? "School Group Pass"
+                    : "Group Pass"}
+                </p>
               </div>
             </div>
 
-            <div className="flex items-center mb-4 sm:mb-6 flex-wrap gap-2">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-white text-xs sm:text-sm font-medium">
-                {getComboIcon("explorer")} Explorer Combo
+            <div className="flex justify-center items-center mb-4 sm:mb-6 flex-wrap gap-2">
+              <span className="text-blue-500 font-bold text-xl md:text-2xl sm:text-base">
+                Free Entry
               </span>
-              <span className="text-blue-500 font-bold text-sm sm:text-base">
-                ₹{ticketData.price}
-              </span>
+            </div>
+
+            {/* Add visitor count badges */}
+            <div className="flex justify-center items-center gap-3 mb-4">
+              <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                <User size={16} className="mr-1" />
+                {ticketData.bookingType === "individual"
+                  ? "1"
+                  : ticketData.adultsCount || 1}{" "}
+                {ticketData.bookingType === "individual" ||
+                (ticketData.adultsCount || 1) === 1
+                  ? "Adult"
+                  : "Adults"}
+              </div>
+              {(ticketData.kidsCount || 0) > 0 && (
+                <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                  <User size={16} className="mr-1" />
+                  {ticketData.kidsCount}{" "}
+                  {ticketData.kidsCount === 1 ? "Kid" : "Kids"}
+                </div>
+              )}
             </div>
 
             <div className="relative py-2 sm:py-4">
@@ -169,8 +160,16 @@ const TicketPass = ({ ticketData, onClose, formData }: TicketPassProps) => {
                 },
                 {
                   icon: <Clock size={16} className="text-blue-500 mr-2" />,
-                  label: "Park Hours",
-                  value: "10:00 AM - 7:00 PM",
+                  label: "Exit Time",
+                  value: ticketData.exitTime
+                    ? `${ticketData.exitTime.split(":")[0]}:${
+                        ticketData.exitTime.split(":")[1]
+                      } ${
+                        parseInt(ticketData.exitTime.split(":")[0]) >= 12
+                          ? "PM"
+                          : "AM"
+                      }`
+                    : "Park Hours",
                 },
                 {
                   icon: <Hash size={16} className="text-blue-500 mr-2" />,
@@ -193,21 +192,64 @@ const TicketPass = ({ ticketData, onClose, formData }: TicketPassProps) => {
               ))}
             </div>
 
+            {/* Display booking details */}
+            <div className="bg-blue-50 p-3 rounded-lg mb-4">
+              <h4 className="text-sm font-semibold text-blue-700 mb-2">
+                Booking Details
+              </h4>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <span className="text-gray-500">Booking Type:</span>
+                  <span className="font-medium ml-1">
+                    {ticketData.bookingType === "individual"
+                      ? "Individual"
+                      : ticketData.bookingType === "school"
+                      ? "School Group"
+                      : "Group"}
+                  </span>
+                </div>
+                {ticketData.bookingType !== "individual" && (
+                  <div>
+                    <span className="text-gray-500">Adults:</span>
+                    <span className="font-medium ml-1">
+                      {ticketData.adultsCount || 1}
+                    </span>
+                  </div>
+                )}
+                <div>
+                  <span className="text-gray-500">Kids:</span>
+                  <span className="font-medium ml-1">
+                    {ticketData.kidsCount || 0}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-gray-500">Total Visitors:</span>
+                  <span className="font-medium ml-1">
+                    {(ticketData.bookingType === "individual"
+                      ? 1
+                      : ticketData.adultsCount || 1) +
+                      (ticketData.kidsCount || 0)}
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <div className="flex flex-col items-center justify-center bg-blue-50 p-4 rounded-lg">
-              <div className="bg-red-500">
-                {qrCodeData ? (
+              {qrCodeData ? (
+                <div className="bg-white p-2 rounded">
                   <Image
                     src={qrCodeData}
                     alt="QR Code"
                     width={140}
                     height={140}
+                    unoptimized
                   />
-                ) : (
-                  <div className="w-[140px] h-[140px] bg-gray-200 flex items-center justify-center text-gray-500 text-xs text-center p-2">
-                    QR code will appear here
-                  </div>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div className="w-[140px] h-[140px] bg-gray-200 flex items-center justify-center text-gray-500 text-xs text-center p-2">
+                  QR code will appear here
+                </div>
+              )}
               <p className="text-xs text-center text-gray-500 mt-2">
                 Scan at the entrance gate.
                 <br />
