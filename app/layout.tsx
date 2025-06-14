@@ -3,6 +3,9 @@ import { Poppins } from "next/font/google";
 import { Baloo_2 } from "next/font/google";
 
 import "./globals.css";
+import Navbar from "./components/navbar";
+import { Toaster } from "react-hot-toast";
+import Footer from "./components/footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -15,7 +18,6 @@ const baloo_2 = Baloo_2({
   weight: ["400", "500", "600", "700"],
   variable: "--font-baloo_2",
 });
-
 
 export const metadata: Metadata = {
   title: "EOD Adventure Park",
@@ -32,8 +34,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${poppins.variable} ${baloo_2.variable} font-sans antialiased`}>
+      <body
+        className={`${poppins.variable} ${baloo_2.variable} font-sans antialiased`}
+      >
+        <Toaster position="top-right" />
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

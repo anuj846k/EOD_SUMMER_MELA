@@ -1,18 +1,14 @@
 "use client";
-
-import Navbar from "@/app/components/navbar";
 import { Hero } from "@/app/components/hero/hero";
-import Footer from "@/app/components/footer";
 import Events from "@/app/components/events";
 import Activities from "@/app/components/events/activities";
 import TicketCTA from "@/app/components/ticket-cta";
 import FaqSection from "@/app/components/faq";
+import Location from "./components/Location";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col  ">
-      <Navbar />
-
       <main>
         <section id="hero">
           <Hero />
@@ -26,6 +22,10 @@ export default function Home() {
           <Activities />
         </section>
 
+        <section id="location" className="overflow-hidden">
+          <Location />
+        </section>
+
         <section id="faq">
           <FaqSection />
         </section>
@@ -33,10 +33,6 @@ export default function Home() {
           <TicketCTA />
         </section>
       </main>
-
-      <section id="contact">
-        <Footer />
-      </section>
     </div>
   );
 }

@@ -10,14 +10,13 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/#activities", label: "Activities" },
   { href: "/#location", label: "Location" },
-  { href: "/combos", label: "Combos" },
 ];
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className=" sticky w-full backdrop-blur-3xl shadow-sm py-1 px-4 md:px-8 top-0 z-50 bg-opacity-70 border-b border-blue-200 ">
+    <nav className=" sticky w-full bg-white  shadow-sm py-1 px-4 md:px-8 top-0 z-50 bg-opacity-70 border-b border-blue-200 ">
       <div className=" mx-auto flex justify-between items-center">
         <div className="flex items-center gap-2 hover:cursor-pointer">
           <Link href="/">
