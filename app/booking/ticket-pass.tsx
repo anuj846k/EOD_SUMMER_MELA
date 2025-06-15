@@ -136,7 +136,7 @@ const TicketPass = ({
                   ? "Adult"
                   : "Adults"}
               </div>
-              {(ticketData.kidsCount || 0) > 0 && (
+              {ticketData.bookingType !== "individual" && (ticketData.kidsCount || 0) > 0 && (
                 <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                   <User size={16} className="mr-1" />
                   {ticketData.kidsCount}{" "}
@@ -216,19 +216,20 @@ const TicketPass = ({
                     </span>
                   </div>
                 )}
-                <div>
-                  <span className="text-gray-500">Kids:</span>
-                  <span className="font-medium ml-1">
-                    {ticketData.kidsCount || 0}
-                  </span>
-                </div>
+                {ticketData.bookingType !== "individual" && (
+                  <div>
+                    <span className="text-gray-500">Kids:</span>
+                    <span className="font-medium ml-1">
+                      {ticketData.kidsCount || 0}
+                    </span>
+                  </div>
+                )}
                 <div>
                   <span className="text-gray-500">Total Visitors:</span>
                   <span className="font-medium ml-1">
-                    {(ticketData.bookingType === "individual"
+                    {ticketData.bookingType === "individual"
                       ? 1
-                      : ticketData.adultsCount || 1) +
-                      (ticketData.kidsCount || 0)}
+                      : (ticketData.adultsCount || 1) + (ticketData.kidsCount || 0)}
                   </span>
                 </div>
               </div>

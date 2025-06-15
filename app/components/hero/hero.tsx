@@ -81,7 +81,7 @@ export function Hero() {
                 FREE ENTRY
               </h2>
               <div className="flex items-center justify-center gap-2 text-black font-semibold text-sm sm:text-base">
-                📅 15 JUNE – 30 JUNE
+                📅 16 JUNE – 30 JUNE
               </div>
             </div>
           </div>

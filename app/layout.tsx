@@ -21,7 +21,7 @@ const baloo_2 = Baloo_2({
 
 export const metadata: Metadata = {
   title: "EOD Adventure Park",
-  description: "Summer Mela free entry from June 15-30",
+  description: "Summer Mela free entry from June 16-30",
   icons: {
     icon: "/logo.png",
   },

@@ -30,20 +30,6 @@ const formSchema = z
       .string()
       .regex(/^\d{10}$/, "Phone number must be exactly 10 digits"),
 
-    birthday: z
-      .object({
-        month: z
-          .number({ invalid_type_error: "Month is required" })
-          .min(1, "Month is required")
-          .max(12),
-        day: z
-          .number({ invalid_type_error: "Day is required" })
-          .min(1, "Day is required")
-          .max(31),
-      })
-      .refine(({ day, month }) => !isNaN(day) && !isNaN(month), {
-        message: "Please select both month and day.",
-      }),
     visitDate: z
       .preprocess(
         (val) => (val ? new Date(val as string) : undefined),
@@ -100,7 +86,6 @@ const RegistrationForm = () => {
       name: "",
       email: "",
       phone: "",
-      birthday: { month: undefined, day: undefined },
       visitDate: undefined,
       bookingType: "individual",
       adultsCount: 1,
@@ -113,10 +98,11 @@ const RegistrationForm = () => {
   const watchAdultsCount = form.watch("adultsCount");
   const watchKidsCount = form.watch("kidsCount");
 
-  // Update adultsCount when booking type changes
+  // Update adultsCount and kidsCount when booking type changes
   useEffect(() => {
     if (watchBookingType === "individual") {
       form.setValue("adultsCount", 1);
+      form.setValue("kidsCount", 0);
     }
   }, [watchBookingType, form]);
 
@@ -139,7 +125,9 @@ const RegistrationForm = () => {
       console.log("result", result);
 
       if (response.ok && result.success) {
-        toast.success("Booking confirmed successfully!");
+        toast.success(
+          "Booking confirmed successfully! Please check your email for the ticket."
+        );
         setFormData(result.booking || result.data?.booking);
         setShowTicketPass(true);
       } else {
@@ -154,17 +142,15 @@ const RegistrationForm = () => {
   };
 
   const onSubmit = async (data: any) => {
-    const { birthday, ...restData } = data;
-
-    // Ensure adultsCount is 1 for individual bookings
+    // Ensure adultsCount is 1 and kidsCount is 0 for individual bookings
     const adultsCount =
       data.bookingType === "individual" ? 1 : data.adultsCount;
+    const kidsCount = data.bookingType === "individual" ? 0 : data.kidsCount;
 
     const payload = {
-      ...restData,
+      ...data,
       adultsCount,
-      birthMonth: birthday.month,
-      birthDay: birthday.day,
+      kidsCount,
       exitTime: data.exitTime,
     };
     console.log("payload", payload);
@@ -342,31 +328,31 @@ const RegistrationForm = () => {
             </div>
           )}
 
-          <div
-            className={watchBookingType === "individual" ? "sm:col-span-2" : ""}
-          >
-            <label className="block text-blue-800 font-medium mb-1 text-sm">
-              Number of Kids
-            </label>
-            <div className="relative">
-              <Users
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"
-                size={18}
-              />
-              <input
-                type="number"
-                min="0"
-                max="100"
-                {...form.register("kidsCount", { valueAsNumber: true })}
-                className="w-full rounded-md border border-gray-300 pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              />
+          {watchBookingType !== "individual" && (
+            <div>
+              <label className="block text-blue-800 font-medium mb-1 text-sm">
+                Number of Kids
+              </label>
+              <div className="relative">
+                <Users
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"
+                  size={18}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  {...form.register("kidsCount", { valueAsNumber: true })}
+                  className="w-full rounded-md border border-gray-300 pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                />
+              </div>
+              {form.formState.errors.kidsCount && (
+                <p className="text-red-500 text-xs mt-1">
+                  {form.formState.errors.kidsCount.message}
+                </p>
+              )}
             </div>
-            {form.formState.errors.kidsCount && (
-              <p className="text-red-500 text-xs mt-1">
-                {form.formState.errors.kidsCount.message}
-              </p>
-            )}
-          </div>
+          )}
 
           <div className="sm:col-span-2">
             <label className="block text-blue-800 font-medium mb-1 text-sm">
@@ -381,6 +367,8 @@ const RegistrationForm = () => {
                 {...form.register("exitTime")}
                 className="w-full rounded-md border border-gray-300 pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               >
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
                 <option value="12:00">12:00 PM</option>
                 <option value="13:00">1:00 PM</option>
                 <option value="14:00">2:00 PM</option>
@@ -390,45 +378,10 @@ const RegistrationForm = () => {
                 <option value="18:00">6:00 PM</option>
                 <option value="19:00">7:00 PM</option>
                 <option value="20:00">8:00 PM</option>
+                <option value="20:00">9:00 PM</option>
+                <option value="20:00">10:00 PM</option>
               </select>
             </div>
-          </div>
-
-          <div className="sm:col-span-2">
-            <label className="block text-blue-800 font-medium mb-1 text-sm">
-              Birth Date (Month & Day)
-            </label>
-            <div className="flex gap-2 sm:gap-3">
-              <select
-                {...form.register("birthday.month", { valueAsNumber: true })}
-                className="w-1/2 rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              >
-                <option value="">Month</option>
-                {[...Array(12)].map((_, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    {new Date(0, i).toLocaleString("default", {
-                      month: "long",
-                    })}
-                  </option>
-                ))}
-              </select>
-              <select
-                {...form.register("birthday.day", { valueAsNumber: true })}
-                className="w-1/2 rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              >
-                <option value="">Day</option>
-                {[...Array(31)].map((_, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    {i + 1}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {form.formState.errors.birthday && (
-              <p className="text-red-500 text-xs mt-1">
-                {form.formState.errors.birthday.message}
-              </p>
-            )}
           </div>
 
           <div className="sm:col-span-2">
@@ -479,10 +432,12 @@ const RegistrationForm = () => {
                 <span>1</span>
               </div>
             )}
-            <div className="flex justify-between mb-1">
-              <span className="text-gray-600">Kids:</span>
-              <span>{watchKidsCount}</span>
-            </div>
+            {watchBookingType !== "individual" && (
+              <div className="flex justify-between mb-1">
+                <span className="text-gray-600">Kids:</span>
+                <span>{watchKidsCount}</span>
+              </div>
+            )}
             <div className="border-t border-blue-200 my-2"></div>
             <div className="flex justify-between font-bold">
               <span className="text-blue-800">Price:</span>

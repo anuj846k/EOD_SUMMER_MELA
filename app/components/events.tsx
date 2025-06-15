@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import scooter from "@/app/assets/Images/scooter.png";
+import text from "@/app/assets/Images/tent.png";
 
 // Sample previous events data
 const previousEvents = [
@@ -171,7 +172,7 @@ const Events = () => {
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                  JUNE 2025 - JULY 2025
+                  16 JUNE 2025 - 30 JUNE 2025
                 </div>
               </div>
             </div>

@@ -45,7 +45,7 @@ const Location = () => {
             Date & Timings
           </h2>
           <p className="text-gray-600 text-base md:text-lg leading-relaxed flex items-center gap-2">
-            <FaCalendarAlt /> 15 June 2025 - 30 June 2025
+            <FaCalendarAlt /> 16 June 2025 - 30 June 2025
             <br />
           </p>
           <p className="text-gray-600 text-base md:text-lg leading-relaxed flex items-center gap-2">
