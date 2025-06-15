@@ -57,6 +57,7 @@ const formSchema = z
       .number()
       .min(0, "Cannot be negative")
       .max(100, "Maximum 100 kids allowed"),
+    schoolName: z.string().optional(),
     exitTime: z.string().min(1, "Exit time is required"),
     // packageType: z.enum(["standard", "school"]).optional(),
   })
@@ -71,6 +72,19 @@ const formSchema = z
     {
       message: "Individual bookings must have exactly 1 adult",
       path: ["adultsCount"],
+    }
+  )
+  .refine(
+    (data) => {
+      // For school bookings, schoolName is required
+      if (data.bookingType === "school") {
+        return data.schoolName && data.schoolName.trim().length > 0;
+      }
+      return true;
+    },
+    {
+      message: "School name is required for school bookings",
+      path: ["schoolName"],
     }
   );
 
@@ -90,6 +104,7 @@ const RegistrationForm = () => {
       bookingType: "individual",
       adultsCount: 1,
       kidsCount: 0,
+      schoolName: "",
       exitTime: "18:00",
     },
   });
@@ -103,6 +118,9 @@ const RegistrationForm = () => {
     if (watchBookingType === "individual") {
       form.setValue("adultsCount", 1);
       form.setValue("kidsCount", 0);
+      form.setValue("schoolName", "");
+    } else if (watchBookingType !== "school") {
+      form.setValue("schoolName", "");
     }
   }, [watchBookingType, form]);
 
@@ -354,6 +372,31 @@ const RegistrationForm = () => {
             </div>
           )}
 
+          {/* School Name - Only show for school bookings */}
+          {watchBookingType === "school" && (
+            <div className="sm:col-span-2">
+              <label className="block text-blue-800 font-medium mb-1 text-sm">
+                School Name
+              </label>
+              <div className="relative">
+                <Users
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-400"
+                  size={18}
+                />
+                <input
+                  {...form.register("schoolName")}
+                  placeholder="Enter school name"
+                  className="w-full rounded-md border border-gray-300 pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                />
+              </div>
+              {form.formState.errors.schoolName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {form.formState.errors.schoolName.message}
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="sm:col-span-2">
             <label className="block text-blue-800 font-medium mb-1 text-sm">
               Exit Time
@@ -367,7 +410,6 @@ const RegistrationForm = () => {
                 {...form.register("exitTime")}
                 className="w-full rounded-md border border-gray-300 pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none"
               >
-                <option value="10:00">10:00 AM</option>
                 <option value="11:00">11:00 AM</option>
                 <option value="12:00">12:00 PM</option>
                 <option value="13:00">1:00 PM</option>

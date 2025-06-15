@@ -23,6 +23,7 @@ interface TicketPassProps {
     bookingType?: string;
     adultsCount?: number;
     kidsCount?: number;
+    schoolName?: string;
     exitTime?: string;
   };
   onClose?: () => void;
@@ -112,9 +113,14 @@ const TicketPass = ({
                   {ticketData.bookingType === "individual"
                     ? "Individual Pass"
                     : ticketData.bookingType === "school"
-                    ? "School Group Pass"
+                    ? "School Pass"
                     : "Group Pass"}
                 </p>
+                {ticketData.bookingType === "school" && ticketData.schoolName && (
+                  <p className="text-xs text-blue-600 font-medium">
+                    {ticketData.schoolName}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -204,10 +210,16 @@ const TicketPass = ({
                     {ticketData.bookingType === "individual"
                       ? "Individual"
                       : ticketData.bookingType === "school"
-                      ? "School Group"
+                      ? "School"
                       : "Group"}
                   </span>
                 </div>
+                {ticketData.bookingType === "school" && ticketData.schoolName && (
+                  <div className="col-span-2">
+                    <span className="text-gray-500">School Name:</span>
+                    <span className="font-medium ml-1">{ticketData.schoolName}</span>
+                  </div>
+                )}
                 {ticketData.bookingType !== "individual" && (
                   <div>
                     <span className="text-gray-500">Adults:</span>
